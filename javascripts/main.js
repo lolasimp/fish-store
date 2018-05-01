@@ -1,1 +1,2 @@
-console.log('Hey');
+const bindEvents = require('./events');
+bindEvents();
