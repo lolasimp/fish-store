@@ -2,10 +2,12 @@
 const loadFishes = require('./fishes');
 const writeFishes = require('./fishDom');
 const bindEvents = require('./events');
+const applySale = require('./discount');
 
 const whenFishesLoad = (data) => {
   $('#available').append(writeFishes(data.fishes));
   bindEvents();
+  applySale();
 };
 
 const whenFishesFailToLoad = (error) => {
@@ -18,7 +20,21 @@ const initializer = () => {
 
 module.exports = initializer;
 
-},{"./events":2,"./fishDom":3,"./fishes":4}],2:[function(require,module,exports){
+},{"./discount":2,"./events":3,"./fishDom":4,"./fishes":5}],2:[function(require,module,exports){
+const discount = 0.2;
+
+const applySale = () => {
+  $('.on-sale').each((i, fishCard) => {
+    const basePriceElem = $(fishCard).find ('.price');
+    const basePrice = basePriceElem.html() * 1;
+    const newPrice = (basePrice * (1 - discount)).toFixed(2);
+    basePriceElem.html(newPrice);
+  });
+};
+
+module.exports = applySale;
+
+},{}],3:[function(require,module,exports){
 // Filter fish that are "on sale"
 const filterFish = () => {
   $('#available .fish').not('.on-sale').toggle();
@@ -52,7 +68,7 @@ const bindEvents = () => {
 
 module.exports = bindEvents;
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 const writeFishes = (fishes) => {
   let domString = '';
   fishes.forEach((fish) => {
@@ -76,7 +92,7 @@ const writeFishes = (fishes) => {
 
 module.exports = writeFishes;
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 const loadFishes = (successFunction, errorFunction) => {
   $.get('../db/fishes.json')
     .done(successFunction)
@@ -85,9 +101,9 @@ const loadFishes = (successFunction, errorFunction) => {
 
 module.exports = loadFishes;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 const initializer = require('./data');
 
 initializer();
 
-},{"./data":1}]},{},[5]);
+},{"./data":1}]},{},[6]);
