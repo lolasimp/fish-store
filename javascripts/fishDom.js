@@ -1,7 +1,7 @@
 const writeFishes = (fishes) => {
   let domString = '';
   fishes.forEach((fish) => {
-    domString += `<div class="${fish.onSale ? 'on-sale' : ''}fish card col-md-6 col-md-offset-3">`;
+    domString += `<div class="${fish.onSale ? 'on-sale' : ''} fish card col-md-6 col-md-offset-3">`;
     domString +=   `<div class="thumbnail">`;
     domString +=     `<img src="${fish.imageSoure}" alt="" width="40%">`;
     domString +=       `<div class="caption">`;

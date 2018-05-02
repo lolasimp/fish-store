@@ -1,10 +1,11 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const loadFishes = require('./fishes');
 const writeFishes = require('./fishDom');
+const bindEvents = require('./events');
 
 const whenFishesLoad = (data) => {
-  console.log('data', data);
   $('#available').append(writeFishes(data.fishes));
+  bindEvents();
 };
 
 const whenFishesFailToLoad = (error) => {
@@ -17,7 +18,7 @@ const initializer = () => {
 
 module.exports = initializer;
 
-},{"./fishDom":3,"./fishes":4}],2:[function(require,module,exports){
+},{"./events":2,"./fishDom":3,"./fishes":4}],2:[function(require,module,exports){
 // Filter fish that are "on sale"
 const filterFish = () => {
   $('#available .fish').not('.on-sale').toggle();
@@ -42,7 +43,7 @@ const moveToCart = (e) => {
 };
 
 const bindEvents = () => {
-  $('button.add').click(moveToCart);
+  $('button.add').on('click', moveToCart);
   $('#show-sale').click(() => {
     changeButtonText();
     filterFish();
@@ -55,7 +56,7 @@ module.exports = bindEvents;
 const writeFishes = (fishes) => {
   let domString = '';
   fishes.forEach((fish) => {
-    domString += `<div class="${fish.onSale ? 'on-sale' : ''}fish card col-md-6 col-md-offset-3">`;
+    domString += `<div class="${fish.onSale ? 'on-sale' : ''} fish card col-md-6 col-md-offset-3">`;
     domString +=   `<div class="thumbnail">`;
     domString +=     `<img src="${fish.imageSoure}" alt="" width="40%">`;
     domString +=       `<div class="caption">`;
@@ -85,10 +86,8 @@ const loadFishes = (successFunction, errorFunction) => {
 module.exports = loadFishes;
 
 },{}],5:[function(require,module,exports){
-const bindEvents = require('./events');
 const initializer = require('./data');
 
 initializer();
-bindEvents();
 
-},{"./data":1,"./events":2}]},{},[5]);
+},{"./data":1}]},{},[5]);
